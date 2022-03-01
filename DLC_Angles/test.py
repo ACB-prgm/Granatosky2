@@ -33,6 +33,7 @@ contacts = {
     "mandible_con_sub" : ["sub_midpoint", "mandtip", 0],
     "topfoot_con_sub" : ["sub_midpoint", "topclaw", 0],
     "botfoot_con_sub" : ["sub_midpoint", "botclaw", 0],
+    "ankle_con_sub" : ["sub_midpoint", "ankle", 0]
 }
 output = {}
 
@@ -145,4 +146,4 @@ def are_in_contact(P1, P2, REF, xy=0):
 
 if __name__ == "__main__":
     main()
-    print("FINISHED")
+    print("\nFINISHED")
