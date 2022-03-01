@@ -1,4 +1,5 @@
 import pandas as pd
+import statistics as stats
 import math
 import os
 
@@ -10,6 +11,12 @@ angles = {
     "ankle" : ["ankle", "hip", "h"],
     "forelimb" : ["glenoid", "elbow", "h"],
     "wrist" : ["wrist", "elbow", "h"]
+}
+VentSnouts = {"Dopey": 49,
+    "Megan" : 55,
+    "Abby" : 57,
+    "Snow" : 106,
+    "Mia" : 54
 }
 
 
@@ -46,6 +53,7 @@ def process_csv(CSV, filename):
     anim_output.to_excel(OUTPUT + "/anim_output.xlsx")
     output = pd.DataFrame(output)
     output.to_excel(OUTPUT + "/{}.xlsx".format(filename.split("chameleon")[0]))
+    ankle = [float(x) for x in df.get("ankle.1") if x != "y"]
 
 
 def get_angle(P1, P2, P3):
