@@ -106,7 +106,9 @@ def get_points_from_csv(file_path):
             REFS.append(abs(float(row["grid1"][1]) - float(row["grid2"][1])) / 10.0)
         except ZeroDivisionError:
             pass
-
+    
+    print(stats.median(REFS))
+    quit()
     DF["sub_midpoint"] = sub_midpoints
     DF["COM"] = COM
     DF["REF"] = stats.mean(REFS)
