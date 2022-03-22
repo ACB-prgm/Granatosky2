@@ -33,6 +33,7 @@ contacts = {
     "mandible_con_sub" : ["sub_midpoint", "mandtip", 0],
     "topfoot_con_sub" : ["sub_midpoint", "topclaw", 0],
     "botfoot_con_sub" : ["sub_midpoint", "botclaw", 0],
+    "ankle_con_sub" : ["sub_midpoint", "ankle", 0]
 }
 output = {}
 
@@ -101,7 +102,9 @@ def get_points_from_csv(file_path):
             REFS.append(abs(float(row["grid1"][1]) - float(row["grid2"][1])) / 10.0)
         except ZeroDivisionError:
             pass
-
+    
+    print(stats.median(REFS))
+    quit()
     DF["sub_midpoint"] = sub_midpoints
     DF["COM"] = COM
     DF["REF"] = stats.mean(REFS)
@@ -141,4 +144,4 @@ def are_in_contact(P1, P2, REF, xy=0):
 
 if __name__ == "__main__":
     main()
-    print("FINISHED")
+    print("\nFINISHED")
