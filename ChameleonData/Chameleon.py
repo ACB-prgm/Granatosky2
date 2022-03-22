@@ -3,7 +3,9 @@ import math
 import os
 
 
+STRIDE_INFO_PATH = "ChameleonData/StrideTimes/Spatiotemporalvariables.xlsx"
 OUTPUT = "ChameleonData/Angles_Outputs"
+FPS = 120
 
 angles = {
     "hindlimb" : ["hip", "knee", "h"],
@@ -12,18 +14,30 @@ angles = {
     "wrist" : ["wrist", "elbow", "h"]
 }
 
+SVLs = {
+    "dopey" : 0.049,
+    "megan" : 0.055,
+    "abby" : 0.057,
+    "snow" : 0.106,
+    "mia" : 0.054,
+} # in mm
+
 
 def main():
     for root, dirs, files in os.walk("ChameleonData/Chameleons", topdown=False):
         for file in files:
             if ".csv" in file:
-                process_csv(os.path.join(root, file), file)
+                process_csv(os.path.join(root, file), file, root.split("/")[-1].lower())
 
 
-def process_csv(CSV, filename):
+def process_csv(CSV, filename, chameleon):
     output = {}
     anim_output = {}
     df = pd.read_csv(CSV, header=1)
+
+    print(chameleon)
+    stride_info_DF = pd.read_excel(STRIDE_INFO_PATH)
+    stride_info_DF = stride_info_DF.fillna("OK")
 
     for index, row in df.iterrows():
         if not index == 0:
@@ -61,6 +75,14 @@ def get_angle(P1, P2, P3):
 
 def get_side(A, B):
     return math.sqrt( (float(A[0]) - float(B[0]))**2 + (float(A[1]) - float(B[1]))**2 )
+
+
+def get_stride_frames(a, b, c):
+    A = round(a * FPS)
+    B = round(b * FPS)
+    C = round(c * FPS)
+
+    return [A, B, C]
 
 
 if __name__ == "__main__":

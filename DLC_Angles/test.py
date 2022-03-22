@@ -5,7 +5,7 @@ import math
 
 
 OUTPUT_DIR = "DLC_Angles/Outputs/"
-FILES_DIR = "DLC_Angles/DLC_CSV"
+FILES_DIR = "DLC_Angles/Testfiles"
 
 # FIX SUB MIDPOINT AND SUBS BECAUSE THEY ARE STATIONARY
 # BODY AXIS, USE WING AND TAILBASE
@@ -38,47 +38,43 @@ output = {}
 
 
 def main():
-    count = 0
-    total = len(os.listdir(FILES_DIR))
-    for file in os.listdir(FILES_DIR):
-        count += 1
-        print("{}/{}".format(count, total), end="\r")
+    for root, dirs, files in os.walk(FILES_DIR):
+        for file in files:
+            filepath = os.path.join(root, file)
+            points_DF = get_points_from_csv(filepath)
 
-        filepath = "{}/{}".format(FILES_DIR, file)
-        points_DF = get_points_from_csv(filepath)
+            for _index, row in points_DF.iterrows():
+                for angle in angles:
+                    if not angle in output:
+                        output[angle] = []
+                    
+                    args = [row[x] for x in angles.get(angle)]
+                    output.get(angle).append(get_angle(args[0], args[1], args[2]))
 
-        for _index, row in points_DF.iterrows():
-            
-            for angle in angles:
-                if not angle in output:
-                    output[angle] = []
-                
-                args = [row[x] for x in angles.get(angle)]
-                output.get(angle).append(get_angle(args[0], args[1], args[2]))
+                for distance in distances:
+                    if not distance in output:
+                        output[distance] = []
+                    
+                    args = [row[x] for x in distances.get(distance)]
+                    output.get(distance).append(get_distance_between(args[0], args[1], row["REF"]))
 
-            for distance in distances:
-                if not distance in output:
-                    output[distance] = []
-                
-                args = [row[x] for x in distances.get(distance)]
-                output.get(distance).append(get_distance_between(args[0], args[1], row["REF"]))
+                for contact in contacts:
+                    if not contact in output:
+                        output[contact] = []
+                    
+                    args = [row[x] for x in contacts.get(contact)]
+                    output.get(contact).append(are_in_contact(args[0], args[1], row["REF"]))
 
-            for contact in contacts:
-                if not contact in output:
-                    output[contact] = []
-                
-                args = [row[x] for x in contacts.get(contact)]
-                output.get(contact).append(are_in_contact(args[0], args[1], row["REF"]))
-
-        final = pd.DataFrame(output)
-        final.to_excel(OUTPUT_DIR + points_DF.name + ".xlsx")
-        output.clear()
+            final = pd.DataFrame(output)
+            final.to_excel(OUTPUT_DIR + points_DF.name + ".xlsx")
+            output.clear()
 
 
 def get_points_from_csv(file_path):
     excel_file = pd.read_csv(file_path)
     DF = pd.DataFrame()
-    DF.name = file_path.split("/")[-1].replace(".csv", "")
+    path = file_path.split("/")
+    DF.name = path[-2] + path[-1].replace(".csv", "")
 
     x_coords = []
     y_coords = []
