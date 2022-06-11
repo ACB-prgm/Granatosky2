@@ -3,10 +3,10 @@ import matplotlib
 import matplotlib.animation
 from matplotlib import pyplot as plt
 
-RESOLUTION = (1920, 1080)
 EXCEL_FILE = "ChameleonData/animations/anim_output.xlsx"
 SAVE_FILE = "ChameleonData/animations/animation.mp4"
 DF = pd.read_excel(EXCEL_FILE)
+RESOLUTION = (1920, 1080)
 FRAMES = len(DF.index)
 
 ANGLES = {
