@@ -75,8 +75,6 @@ def scale_dataframe(DF):
     return new_DF
 
 
-
-
 if __name__ == "__main__":
     main()
     print("#### FINISHED ####")

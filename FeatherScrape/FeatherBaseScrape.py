@@ -95,13 +95,11 @@ def main():
 
 
 
-
-
 def create_driver():
     options_ = webdriver.ChromeOptions()
     options_.add_argument("headless")
-    options_.add_argument('window-size=2000,2000')
-    options_.add_argument('window-position=3000,0')
+    # options_.add_argument('window-size=2000,2000')
+    # options_.add_argument('window-position=3000,0')
 
     return webdriver.Chrome(ChromeDriverManager().install(), options=options_)
 
