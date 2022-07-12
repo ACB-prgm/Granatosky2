@@ -1,7 +1,6 @@
 from matplotlib import pyplot as plt
 from pathlib import Path
 import subprocess
-import matplotlib as mpl
 import pandas
 import os
 
