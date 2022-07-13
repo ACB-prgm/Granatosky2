@@ -63,6 +63,7 @@ def main():
 def add_settings(force_idx, line2Ds):
     plt.xlabel("Percent of Stride (%)")
     plt.ylabel("% BW")
+
     # plt.ylabel("Force")
     plt.title(FORCES[force_idx])
     plt.hlines(0.0, 0.0, 100, "black", linewidth=1)
@@ -75,16 +76,13 @@ def add_settings(force_idx, line2Ds):
         line = line.lower()
 
         if "fore" in line:
-            line2D.set_color(FORE_COLOR)
+            COLOR = FORE_COLOR
         else:
-            line2D.set_color(HIND_COLOR)
-        # if "ek" in line:
-        #     line2D.set_linestyle("--")
-        
-        # if not ("ek" in line or "ep" in line):
-        #     line = line.split(" ")[-1]
+            COLOR = HIND_COLOR
         
         line2D.set_label(line.upper())
+        line2D.set_color(COLOR)
+        plt.fill_between(line2D.get_xdata(), line2D.get_ydata(), 0 ,color=COLOR, alpha=0.5)
     
     plt.legend()
     plt.tight_layout()
