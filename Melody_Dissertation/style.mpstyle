@@ -1,0 +1,12 @@
+lines.linewidth : 3
+lines.markersize : 10
+
+axes.titlesize : 14
+axes.labelsize : 12
+# axes.linewidth : 2
+
+xtick.labelsize : 12
+ytick.labelsize : 12
+
+# figure.figsize : 9.6, 3.6
+figure.dpi : 150
